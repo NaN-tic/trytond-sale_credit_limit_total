@@ -44,11 +44,14 @@ class Party(metaclass=PoolMeta):
                                 invoice_line.unit, invoice_line.quantity,
                                 line.unit, round=False)
 
-                    for tax in line.taxes:
-                        amount += Currency.compute(
-                            sale.currency,
-                            Decimal(str(quantity)) * line.unit_price, currency,
-                            round=False) * tax.rate
+                    if quantity > 0:
+                        # Apply only when quantity > 0 for consistency with what
+                        # sale_credit_limit module does
+                        for tax in line.taxes:
+                            amount += Currency.compute(
+                                sale.currency,
+                                Decimal(str(quantity)) * line.unit_price, currency,
+                                round=False) * tax.rate
 
             amounts[sale.party.id] = currency.round(
                     amounts[sale.party.id] + amount)
