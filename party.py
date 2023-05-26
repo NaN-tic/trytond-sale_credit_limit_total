@@ -34,7 +34,7 @@ class Party(metaclass=PoolMeta):
             if (sale.sale_credit_limit_amount and
                     sale.sale_credit_limit_amount == 'total_amount'):
                 for line in sale.lines:
-                    quantity = line.quantity
+                    quantity = line.credit_limit_quantity
                     if not quantity:
                         continue
                     for invoice_line in line.invoice_lines:
