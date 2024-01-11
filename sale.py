@@ -54,7 +54,7 @@ class Sale(metaclass=PoolMeta):
             'readonly': ~Eval('state').in_(['draft', 'quotation']),
             'required': ~Eval('state').in_(
                 ['draft', 'quotation', 'cancelled']),
-        }, depends=['state'])
+        })
 
     @classmethod
     def default_sale_credit_limit_amount(cls, **pattern):
