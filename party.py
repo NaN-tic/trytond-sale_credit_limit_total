@@ -48,6 +48,8 @@ class Party(metaclass=PoolMeta):
                         # Apply only when quantity > 0 for consistency with what
                         # sale_credit_limit module does
                         for tax in line.taxes:
+                            if not line.unit_price or not tax.rate:
+                                continue
                             amount += Currency.compute(
                                 sale.currency,
                                 Decimal(str(quantity)) * line.unit_price, currency,
