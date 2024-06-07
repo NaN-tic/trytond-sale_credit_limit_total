@@ -34,10 +34,14 @@ class Party(metaclass=PoolMeta):
             if (sale.sale_credit_limit_amount and
                     sale.sale_credit_limit_amount == 'total_amount'):
                 for line in sale.lines:
+                    if line.type != 'line':
+                        continue
                     quantity = line.credit_limit_quantity
                     if not quantity:
                         continue
                     for invoice_line in line.invoice_lines:
+                        if invoice_line.type != 'line':
+                            continue
                         invoice = invoice_line.invoice
                         if invoice and invoice.move:
                             quantity -= Uom.compute_qty(
